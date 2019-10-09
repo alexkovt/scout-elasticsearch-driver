@@ -305,7 +305,10 @@ class ElasticEngine extends Engine
             $columns[] = $scoutKeyName;
         }
 
-        $ids = $this->mapIds($results)->all();
+        $ids = [];
+        foreach ($results['hits']['hits'] as $hit) {
+            $ids[] = $hit['_source'][$scoutKeyName];
+        }
 
         $query = $model::usesSoftDelete() ? $model->withTrashed() : $model->newQuery();
 
@@ -315,8 +318,8 @@ class ElasticEngine extends Engine
             ->keyBy($scoutKeyName);
 
         return Collection::make($results['hits']['hits'])
-            ->map(function ($hit) use ($models) {
-                $id = $hit['_id'];
+            ->map(function ($hit) use ($models, $scoutKeyName) {
+                $id = $hit['_source'][$scoutKeyName];
 
                 if (isset($models[$id])) {
                     $model = $models[$id];
