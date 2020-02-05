@@ -138,6 +138,37 @@ trait Searchable
     }
 
     /**
+     * Execute a raw search with scroll.
+     *
+     * @param $query
+     * @param $size
+     * @param $scroll
+     * @return array
+     */
+    public static function searchRawWithScroll(array $query, int $size = 10000, string $scroll = '10s')
+    {
+        $model = new static();
+
+        return $model->searchableUsing()
+            ->searchRawWithScroll($model, $query, $size, $scroll);
+    }
+
+    /**
+     * Execute a scroll search.
+     *
+     * @param $scroll_id
+     * @param $scroll
+     * @return array
+     */
+    public static function scroll(string $scroll_id, string $scroll = '10s')
+    {
+        $model = new static();
+
+        return $model->searchableUsing()
+            ->scroll($scroll_id, $scroll);
+    }
+
+    /**
      * Set the highlight attribute.
      *
      * @param \ScoutElastic\Highlight $value

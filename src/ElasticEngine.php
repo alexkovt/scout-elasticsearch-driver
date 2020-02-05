@@ -280,6 +280,43 @@ class ElasticEngine extends Engine
     }
 
     /**
+     * Make a raw search with scroll.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param $query
+     * @param $size
+     * @param $scroll
+     * @return mixed
+     * @throws \Exception
+     */
+    public function searchRawWithScroll(Model $model, $query, $size = 10000, string $scroll = '10s')
+    {
+        $payload = (new TypePayload($model))
+            ->setIfNotEmpty('body', $query)
+            ->set('scroll', $scroll)
+            ->set('size', $size)
+            ->set('sort', ['_doc'])
+            ->get();
+
+        return ElasticClient::search($payload);
+    }
+
+    /**
+     * Make a scroll.
+     *
+     * @param $scroll_id
+     * @param $scroll
+     * @return mixed
+     */
+    public function scroll(string $scroll_id, string $scroll = '10s')
+    {
+        return ElasticClient::scroll([
+            'scroll' => $scroll,
+            'scroll_id' => $scroll_id,
+        ]);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function mapIds($results)
