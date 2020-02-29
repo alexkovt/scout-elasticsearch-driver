@@ -145,7 +145,7 @@ trait Searchable
      * @param $scroll
      * @return array
      */
-    public static function searchRawWithScroll(array $query, int $size = 10000, string $scroll = '10s')
+    public static function searchRawWithScroll(array $query, int $size = 10000, string $scroll = '1m')
     {
         $model = new static();
 
@@ -160,7 +160,7 @@ trait Searchable
      * @param $scroll
      * @return array
      */
-    public static function scroll(string $scroll_id, string $scroll = '10s')
+    public static function scroll(string $scroll_id, string $scroll = '1m')
     {
         $model = new static();
 
