@@ -289,7 +289,7 @@ class ElasticEngine extends Engine
      * @return mixed
      * @throws \Exception
      */
-    public function searchRawWithScroll(Model $model, $query, $size = 10000, string $scroll = '10s')
+    public function searchRawWithScroll(Model $model, $query, $size = 10000, string $scroll = '1m')
     {
         $payload = (new TypePayload($model))
             ->setIfNotEmpty('body', $query)
@@ -308,7 +308,7 @@ class ElasticEngine extends Engine
      * @param $scroll
      * @return mixed
      */
-    public function scroll(string $scroll_id, string $scroll = '10s')
+    public function scroll(string $scroll_id, string $scroll = '1m')
     {
         return ElasticClient::scroll([
             'scroll' => $scroll,
