@@ -284,12 +284,12 @@ class ElasticEngine extends Engine
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param $query
-     * @param $size
-     * @param $scroll
+     * @param int|null $size
+     * @param string|null $scroll
      * @return mixed
      * @throws \Exception
      */
-    public function searchRawWithScroll(Model $model, $query, $size = 10000, string $scroll = '1m')
+    public function searchRawWithScroll(Model $model, $query, $size = 10000, $scroll = '1m')
     {
         $payload = (new TypePayload($model))
             ->setIfNotEmpty('body', $query)
@@ -305,10 +305,10 @@ class ElasticEngine extends Engine
      * Make a scroll.
      *
      * @param $scroll_id
-     * @param $scroll
+     * @param string|null $scroll
      * @return mixed
      */
-    public function scroll(string $scroll_id, string $scroll = '1m')
+    public function scroll(string $scroll_id, $scroll = '1m')
     {
         return ElasticClient::scroll([
             'scroll' => $scroll,
