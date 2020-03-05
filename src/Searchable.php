@@ -141,11 +141,11 @@ trait Searchable
      * Execute a raw search with scroll.
      *
      * @param $query
-     * @param $size
-     * @param $scroll
+     * @param int|null $size
+     * @param string|null $scroll
      * @return array
      */
-    public static function searchRawWithScroll(array $query, int $size = 10000, string $scroll = '1m')
+    public static function searchRawWithScroll(array $query, $size = 10000, $scroll = '1m')
     {
         $model = new static();
 
@@ -157,10 +157,10 @@ trait Searchable
      * Execute a scroll search.
      *
      * @param $scroll_id
-     * @param $scroll
+     * @param string|null $scroll
      * @return array
      */
-    public static function scroll(string $scroll_id, string $scroll = '1m')
+    public static function scroll(string $scroll_id, $scroll = '1m')
     {
         $model = new static();
 
