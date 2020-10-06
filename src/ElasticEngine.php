@@ -348,6 +348,12 @@ class ElasticEngine extends Engine
             $ids[] = $hit['_source'][$scoutKeyName];
         }
 
+        if (method_exists($model, 'getBinaryColumns') && in_array($scoutKeyName, $model->getBinaryColumns())) {
+            $ids = array_map(function ($id) {
+                return hex2bin($id);
+            }, $ids);
+        }
+
         $query = $model::usesSoftDelete() ? $model->withTrashed() : $model->newQuery();
 
         $models = $query
